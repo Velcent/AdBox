@@ -1,25 +1,19 @@
-// Copyright 2014-1016, 2Scars Games. All Rights Reserved.
-#if PLATFORM_ANDROID
-#include "AdMobJavaWrapper.h"
-#endif
+// Copyright 2014-2016, 2Scars Games. All Rights Reserved.
 #include "AdMobPrivatePCH.h"
+#include "AdMobJavaWrapper.h"
 
-class FAdMob : public IAdMobModule
+class FAdMobModule : public IAdMobModule
 {
-	/** IModuleInterface implementation */
-	virtual void StartupModule() override;
-	virtual void ShutdownModule() override;
+	virtual void StartupModule() override
+	{
+#if PLATFORM_ANDROID
+		InitAdMobJavaMethods();
+#endif
+	}
+
+	virtual void ShutdownModule() override
+	{
+	}
 };
 
-IMPLEMENT_MODULE( FAdMob, AdMob )
-
-void FAdMob::StartupModule()
-{
-#if PLATFORM_ANDROID
-   InitAdMobJavaMethods();
-#endif
-}
-
-void FAdMob::ShutdownModule()
-{	
-}
+IMPLEMENT_MODULE(FAdMobModule, AdMob)
